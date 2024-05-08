@@ -27,7 +27,7 @@ namespace lab_2_1
             {
                 // Побудова SQL-виразу для вставки даних
                 StringBuilder sqlBuilder = new StringBuilder();
-                sqlBuilder.AppendFormat("INSERT INTO \"{0}\" (", tableName);
+                sqlBuilder.AppendFormat("INSERT INTO {0} (", tableName);
                 int count = 0;
                 foreach (var item in data)
                 {
