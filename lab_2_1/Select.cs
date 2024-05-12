@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Npgsql;
 
-namespace lab_2_1
+/*namespace lab_2_1
 {
     internal class Selects : Connection
     {
@@ -96,3 +96,4 @@ namespace lab_2_1
         }
     }
 }
+*/
