@@ -77,5 +77,137 @@ namespace lab_2_1
                 Console.WriteLine($"Sale ID: {sale.Saleid}, Customer: {sale.Customer?.Name}, Employee: {sale.Employee?.Name}, Pet: {sale.Pet?.Name}, Product: {sale.Product?.Name}, Sale Date: {sale.Saledate?.ToShortDateString()}, Total Amount: {sale.Totalamount}, Payment Method: {sale.Paymentmethod}");
             }
         }
+
+        public void AddCustomer()
+        {
+            Console.WriteLine("Enter Customer Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Enter Phone:");
+            string phone = Console.ReadLine();
+            Console.WriteLine("Enter Address:");
+            string address = Console.ReadLine();
+
+            var customer = new Customer
+            {
+                Name = name,
+                Email = email,
+                Phone = phone,
+                Address = address
+            };
+
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+            Console.WriteLine("New customer added successfully.");
+        }
+
+        public void AddEmployee()
+        {
+            Console.WriteLine("Enter Employee Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Position:");
+            string position = Console.ReadLine();
+            Console.WriteLine("Enter Email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Enter Salary:");
+            double salary = Convert.ToDouble(Console.ReadLine());
+
+            var employee = new Employee
+            {
+                Name = name,
+                Position = position,
+                Email = email,
+                Salary = salary
+            };
+
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
+            Console.WriteLine("New employee added successfully.");
+        }
+
+        public void AddPet()
+        {
+            Console.WriteLine("Enter Species:");
+            string species = Console.ReadLine();
+            Console.WriteLine("Enter Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Breed:");
+            string breed = Console.ReadLine();
+            Console.WriteLine("Enter Birthdate (yyyy-mm-dd):");
+            DateOnly birthdate = DateOnly.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Health Status:");
+            string healthStatus = Console.ReadLine();
+
+            var pet = new Pet
+            {
+                Species = species,
+                Name = name,
+                Breed = breed,
+                Birthdate = birthdate,
+                Healthstatus = healthStatus
+            };
+
+            _context.Pets.Add(pet);
+            _context.SaveChanges();
+            Console.WriteLine("New pet added successfully.");
+        }
+
+        public void AddProduct()
+        {
+            Console.WriteLine("Enter Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Price:");
+            double price = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Category:");
+            string category = Console.ReadLine();
+            Console.WriteLine("Enter Stock Quantity:");
+            int stockQuantity = Convert.ToInt32(Console.ReadLine());
+
+            var product = new Product
+            {
+                Name = name,
+                Price = price,
+                Category = category,
+                Stockquantity = stockQuantity
+            };
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            Console.WriteLine("New product added successfully.");
+        }
+
+        public void AddSale()
+        {
+            Console.WriteLine("Enter Customer ID:");
+            int customerId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Employee ID:");
+            int employeeId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Pet ID:");
+            int petId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Product ID:");
+            int productId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Sale Date (yyyy-mm-dd):");
+            DateOnly saleDate = DateOnly.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Total Amount:");
+            double totalAmount = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Payment Method:");
+            string paymentMethod = Console.ReadLine();
+
+            var sale = new Sale
+            {
+                Customerid = customerId,
+                Employeeid = employeeId,
+                Petid = petId,
+                Productid = productId,
+                Saledate = saleDate,
+                Totalamount = totalAmount,
+                Paymentmethod = paymentMethod
+            };
+
+            _context.Sales.Add(sale);
+            _context.SaveChanges();
+            Console.WriteLine("New sale added successfully.");
+        }
     }
 }
