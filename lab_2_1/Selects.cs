@@ -209,5 +209,78 @@ namespace lab_2_1
             _context.SaveChanges();
             Console.WriteLine("New sale added successfully.");
         }
+
+        public void DisplaySalesWithLazyLoading()
+        {
+            var sales = _context.Sales.ToList();
+
+            foreach (var sale in sales)
+            {
+                string customerName = sale.Customer?.Name ?? "N/A";
+                string employeeName = sale.Employee?.Name ?? "N/A";
+                string petName = sale.Pet?.Name ?? "N/A";
+                string productName = sale.Product?.Name ?? "N/A";
+                string saleDate = sale.Saledate.HasValue ? sale.Saledate.Value.ToShortDateString() : "N/A";
+
+                Console.WriteLine($"Sale ID: {sale.Saleid}, Customer: {customerName}, Employee: {employeeName}, Pet: {petName}, Product: {productName}, Sale Date: {saleDate}, Total Amount: {sale.Totalamount}, Payment Method: {sale.Paymentmethod}");
+            }
+        }
+
+
+        public void DisplaySalesWithEagerLoading()
+        {
+            var sales = _context.Sales
+                .Include(s => s.Customer)
+                .Include(s => s.Employee)
+                .Include(s => s.Pet)
+                .Include(s => s.Product)
+                .ToList();
+
+            foreach (var sale in sales)
+            {
+                Console.WriteLine($"Sale ID: {sale.Saleid}, Customer: {sale.Customer?.Name}, Employee: {sale.Employee?.Name}, Pet: {sale.Pet?.Name}, Product: {sale.Product?.Name}, Sale Date: {sale.Saledate?.ToShortDateString()}, Total Amount: {sale.Totalamount}, Payment Method: {sale.Paymentmethod}");
+            }
+        }
+
+        public void DisplaySalesWithExplicitLoading()
+        {
+            var sales = _context.Sales.ToList();
+
+            foreach (var sale in sales)
+            {
+                _context.Entry(sale).Reference(s => s.Customer).Load();
+                _context.Entry(sale).Reference(s => s.Employee).Load();
+                _context.Entry(sale).Reference(s => s.Pet).Load();
+                _context.Entry(sale).Reference(s => s.Product).Load();
+
+                Console.WriteLine($"Sale ID: {sale.Saleid}, Customer: {sale.Customer?.Name}, Employee: {sale.Employee?.Name}, Pet: {sale.Pet?.Name}, Product: {sale.Product?.Name}, Sale Date: {sale.Saledate?.ToShortDateString()}, Total Amount: {sale.Totalamount}, Payment Method: {sale.Paymentmethod}");
+            }
+        }
+
+        public void DisplayAggregatedSales()
+        {
+            var customerId = 1;
+
+            var salesData = _context.Sales
+                .Where(s => s.Customerid == customerId)
+                .OrderBy(s => s.Saledate)
+                .Select(s => new
+                {
+                    s.Saleid,
+                    s.Saledate,
+                    s.Totalamount
+                })
+                .ToList();
+
+            var totalAmount = salesData.Sum(s => s.Totalamount);
+
+            Console.WriteLine($"Total sales amount for Customer ID {customerId}: {totalAmount}");
+
+            foreach (var sale in salesData)
+            {
+                Console.WriteLine($"Sale ID: {sale.Saleid}, Sale Date: {sale.Saledate?.ToShortDateString()}, Total Amount: {sale.Totalamount}");
+            }
+        }
+
     }
 }

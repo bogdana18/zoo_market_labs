@@ -36,6 +36,11 @@ namespace lab_2_1
                 Console.WriteLine("19 - delete a Pet");
                 Console.WriteLine("20 - delete a Product");
                 Console.WriteLine("21 - delete an Sale");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("22 - Display Sales with Lazy Loading");
+                Console.WriteLine("23 - Display Sales with Eager Loading");
+                Console.WriteLine("24 - Display Sales with Explicit Loading");
+                Console.WriteLine("25 - Display Aggregated Sales");
 
                 int swt = Convert.ToInt32(Console.ReadLine());
 
@@ -115,6 +120,18 @@ namespace lab_2_1
                         break;
                     case 21:
                         deleter.DeleteSale();
+                        break;
+                    case 22:
+                        selector.DisplaySalesWithLazyLoading();
+                        break;
+                    case 23:
+                        selector.DisplaySalesWithEagerLoading();
+                        break;
+                    case 24:
+                        selector.DisplaySalesWithExplicitLoading();
+                        break;
+                    case 25:
+                        selector.DisplayAggregatedSales();
                         break;
                     default:
                         {
